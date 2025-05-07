@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Quizz Tebak-Tebakan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .kuis-container {
+    background: #fff;
+    max-width: 350px;
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(118, 75, 162, 0.4);
+    padding: 30px 25px;
+    display: flex;
+    flex-direction: column;
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .kuis-header {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .judul {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #5f3d82;
+    margin-bottom: 8px;
+  }
+  .deskripsi {
+    font-size: 1rem;
+    color: #7a66a7;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+
+  .tombol-mulai {
+    background: #5f3d82;
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(95, 61, 130, 0.6);
+    padding: 15px 0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    width: 100%;
+  }
+  .tombol-mulai:hover,
+  .tombol-mulai:focus {
+    background-color: #4b2d81;
+    box-shadow: 0 15px 40px rgba(75, 45, 129, 0.8);
+    outline: none;
+  }
+
+  .pertanyaan {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #4b3869;
+    margin-bottom: 20px;
+  }
+
+  .jawaban {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-gap: 15px;
+  }
+
+  .jawaban li {
+    margin: 0;
+  }
+
+  .jawaban-btn {
+    width: 100%;
+    padding: 14px 22px;
+    background: #e9e4f0;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    color: #5f3d82;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(118, 75, 162, 0.25);
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.15s ease;
+    user-select: none;
+  }
+
+  .jawaban-btn:hover,
+  .jawaban-btn:focus {
+    background-color: #764ba2;
+    color: white;
+    border-color: #4b2d81;
+    outline: none;
+    transform: scale(1.05);
+  }
+
+  .jawaban-btn.benar {
+    background-color: #4caf50 !important;
+    color: white !important;
+    border-color: #3a8d36 !important;
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6) !important;
+    transform: none !important;
+  }
+
+  .jawaban-btn.salah {
+    background-color: #e74c3c !important;
+    color: white !important;
+    border-color: #b0362a !important;
+    box-shadow: 0 8px 20px rgba(231, 76, 60, 0.6) !important;
+    transform: none !important;
+  }
+
+  .tombol-berikutnya {
+    margin-top: 30px;
+    padding: 14px 0;
+    background: #5f3d82;
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(95, 61, 130, 0.6);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    width: 100%;
+  }
+  .tombol-berikutnya:disabled {
+    background: #ac96c7;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .tombol-berikutnya:hover:not(:disabled),
+  .tombol-berikutnya:focus:not(:disabled) {
+    background-color: #4b2d81;
+    box-shadow: 0 15px 40px rgba(75, 45, 129, 0.8);
+    outline: none;
+  }
+
+  .hasil {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #4b3869;
+    text-align: center;
+    margin-top: 25px;
+    min-height: 32px;
+    user-select: none;
+  }
+
+  @media (max-height: 600px) {
+    body {
+      padding: 10px;
+    }
+    .kuis-container {
+      padding: 20px 20px;
+    }
+  }
+</style>
+</head>
+<body>
+  <main class="kuis-container" role="main" aria-label="Kuis Interaktif Menarik">
+    <section class="kuis-header" id="halamanAwal">
+      <h1 class="judul">Selamat Datang..! Di Kuis Tebak-Tebakan</h1>
+      <p class="deskripsi">
+        Ini adalah soal Tebak-Tebakan... jadi kamu harus baca dan di Jawab dengan telitih yaa....<br/>
+        Klik dibawah ya untuk Memulai!
+      </p>
+      <button class="tombol-mulai" id="tombolMulai" aria-label="Mulai Kuis">Mulai Kuis</button>
+    </section>
+    <section id="kuisBagian" style="display:none;">
+      <h2 class="pertanyaan" id="pertanyaan">Sebentar yaa...</h2>
+      <ul class="jawaban" id="jawaban">
+        <!-- Jawaban akan muncul di sini -->
+      </ul>
+      <button type="button" class="tombol-berikutnya" id="tombolBerikutnya" disabled>Soal Berikutnya</button>
+      <p class="hasil" id="hasil" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script>
+    const dataKuis = [
+      {
+        pertanyaan: "Apa yang selalu berjalan tetapi tidak pernah bergerak?",
+        jawaban: ["Jam", "Sungai", "Mobil", "Kucing"],
+        benar: 0
+      },
+      {
+        pertanyaan: "Apa yang bisa terbang tanpa sayap?",
+        jawaban: [
+          "Burung",
+          "Pesawat",
+          "Waktu",
+          "Kupu-Kupu"
+        ],
+        benar: 2
+      },
+      {
+        pertanyaan: "Apa yang memiliki banyak jari tetapi tidak bisa menggenggam?",
+        jawaban: [
+          "Sarung Tangan",
+          "Tangan",
+          "Sepatu",
+          "Sapu"
+        ],
+        benar: 0
+      },
+      {
+        pertanyaan: "Apa yang bisa pecah tetapi tidak pernah jatuh?",
+        jawaban: ["Telur", "Balon", "Janji", "Kaca"],
+        benar: 2
+      },
+      {
+        pertanyaan: "Apa yang punya banyak mata tapi tidak bisa melihat?",
+        jawaban: ["Ikan", "Dadu", "Burung Hantu", "Kupu-Kupu"],
+        benar: 1
+      },
+      {
+        pertanyaan: "Saya bisa berlari tetapi tidak punya kaki. Apa saya?",
+        jawaban: [
+          "Manusia",
+          "Air",
+          "Mobil",
+          "Angin"
+        ],
+        benar: 1
+      },
+      {
+        pertanyaan: "Apa yang tidak bisa dimakan pada saat sarapan?",
+        jawaban: [
+          "Telur",
+          "Roti",
+          "Makan Siang",
+          "Sereal"
+        ],
+        benar: 2
+      },
+      {
+        pertanyaan: "Benda apa yang berwarna hitam saat bersih dan putih saat kotor?",
+        jawaban: ["Kapas", "Papan Tulis", "Pakaian", "Kain"],
+        benar: 1
+      },
+      {
+        pertanyaan: "Apa yang bisa dipecahkan tapi tak bisa disentuh, bisa mengalir tapi tak bisa dilihat?",
+        jawaban: [
+          "Gelas",
+          "Es",
+          "Rahasia",
+          "Waktu"
+        ],
+        benar: 3
+      },
+      {
+        pertanyaan: "Saya adalah sesuatu yang kamu miliki tapi orang lain yang menggunakannya lebih sering daripada kamu. Apa saya?",
+        jawaban: ["Nama Kamu", "Uang", "Telepon", "Pakaian"],
+        benar: 0
+      }
+    ];
+
+    const halamanAwal = document.getElementById('halamanAwal');
+    const kuisBagian = document.getElementById('kuisBagian');
+    const tombolMulai = document.getElementById('tombolMulai');
+    const pertanyaanEl = document.getElementById('pertanyaan');
+    const jawabanEl = document.getElementById('jawaban');
+    const tombolBerikutnya = document.getElementById('tombolBerikutnya');
+    const hasilEl = document.getElementById('hasil');
+
+    let indeksPertanyaan = 0;
+    let skor = 0;
+    let sudahMenjawab = false;
+
+    tombolMulai.addEventListener('click', () => {
+      halamanAwal.style.display = 'none';
+      kuisBagian.style.display = 'block';
+      indeksPertanyaan = 0;
+      skor = 0;
+      muatPertanyaan();
+    });
+
+    function muatPertanyaan() {
+      sudahMenjawab = false;
+      tombolBerikutnya.disabled = true;
+      hasilEl.textContent = '';
+      const sekarang = dataKuis[indeksPertanyaan];
+      pertanyaanEl.textContent = sekarang.pertanyaan;
+      jawabanEl.innerHTML = '';
+      sekarang.jawaban.forEach((pilihan, index) => {
+        const li = document.createElement('li');
+        const tombol = document.createElement('button');
+        tombol.textContent = pilihan;
+        tombol.classList.add('jawaban-btn');
+        tombol.setAttribute('type', 'button');
+        tombol.setAttribute('aria-pressed', 'false');
+        tombol.addEventListener('click', () => pilihJawaban(index, tombol));
+        li.appendChild(tombol);
+        jawabanEl.appendChild(li);
+      });
+    }
+
+    function pilihJawaban(indexDipilih, tombol) {
+      if (sudahMenjawab) return;
+      sudahMenjawab = true;
+      tombolBerikutnya.disabled = false;
+      const sekarang = dataKuis[indeksPertanyaan];
+      const tombolJawaban = jawabanEl.querySelectorAll('button');
+      tombolJawaban.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === sekarang.benar) {
+          btn.classList.add('benar');
+          btn.setAttribute('aria-pressed', 'true');
+        } else if (idx === indexDipilih) {
+          btn.classList.add('salah');
+          btn.setAttribute('aria-pressed', 'true');
+        }
+      });
+      if (indexDipilih === sekarang.benar) {
+        skor++;
+        hasilEl.textContent = "Wih Keren...!";
+        hasilEl.style.color = '#4caf50';
+      } else {
+        hasilEl.textContent = `Yah, Sayang Sekali...! Jawaban yang benar adalah: ${sekarang.jawaban[sekarang.benar]}`;
+        hasilEl.style.color = '#e74c3c';
+      }
+    }
+
+    tombolBerikutnya.addEventListener('click', () => {
+      indeksPertanyaan++;
+      if (indeksPertanyaan < dataKuis.length) {
+        muatPertanyaan();
+      } else {
+        tampilkanHasilAkhir();
+      }
+    });
+
+    function tampilkanHasilAkhir() {
+      pertanyaanEl.textContent = "Kuis Selesai!...Kamsahamnida";
+      jawabanEl.innerHTML = '';
+      tombolBerikutnya.style.display = 'none';
+      hasilEl.style.color = '#4b3869';
+      hasilEl.textContent = `Skor Kamu: ${skor} dari ${dataKuis.length}`;
+    }
+  </script>
+</body>
+</html>
+</content>
+</create_file>
