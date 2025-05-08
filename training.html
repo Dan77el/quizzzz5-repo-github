@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Doktelll...</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+      color: #323232;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    .profile-card {
+      background: #ffffffdd;
+      padding: 35px 30px;
+      border-radius: 30px;
+      box-shadow: 0 14px 45px rgba(0,0,0,0.2);
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .profile-card:hover {
+      box-shadow: 0 26px 70px rgba(0,0,0,0.3);
+      transform: translateY(-10px);
+    }
+    .profile-img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 28px;
+      border: 5px solid #3a9bdc;
+      box-shadow: 0 6px 24px rgba(58, 155, 220, 0.4);
+      background-color: #e0f0ff;
+      transition: box-shadow 0.3s ease;
+    }
+    .profile-img:hover {
+      box-shadow: 0 10px 35px #3a9bdccc;
+    }
+    h1 {
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-size: 2rem;
+      color: #1a2a6c;
+      text-shadow: 0 1px 3px rgba(26, 42, 108, 0.3);
+    }
+    p.title {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #3a9bdc;
+      margin: 0 0 20px 0;
+      letter-spacing: 0.04em;
+    }
+    ul.info-list {
+      list-style: none;
+      padding: 0;
+      font-size: 1.05rem;
+      color: #444;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    ul.info-list li {
+      margin-bottom: 14px;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.4;
+      border-left: 4px solid #3a9bdc;
+      transition: background-color 0.25s ease;
+      cursor: default;
+      border-radius: 4px;
+    }
+    ul.info-list li::before {
+      content: '💉';
+      position: absolute;
+      left: -26px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.1rem;
+      color: #3a9bdc;
+    }
+    ul.info-list li:hover {
+      background-color: #def2ff;
+      color: #176fae;
+    }
+    .bio {
+      font-style: italic;
+      font-size: 1rem;
+      color: #555;
+      border-left: 5px solid #3a9bdc;
+      padding-left: 16px;
+      user-select: none;
+      line-height: 1.6;
+      box-shadow: inset 0 0 6px rgba(58, 155, 220, 0.15);
+      transition: color 0.3s ease;
+      max-height: 120px;
+      overflow-y: auto;
+    }
+    .bio:hover {
+      color: #176fae;
+    }
+    /* Scrollbar for bio */
+    .bio::-webkit-scrollbar {
+      width: 7px;
+    }
+    .bio::-webkit-scrollbar-thumb {
+      background-color: #3a9bdccc;
+      border-radius: 10px;
+    }
+    .bio::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    /* Responsive */
+    @media (max-width: 400px) {
+      .profile-card {
+        padding: 30px 22px;
+        max-width: 320px;
+      }
+      h1 {
+        font-size: 1.7rem;
+      }
+      p.title {
+        font-size: 1rem;
+      }
+      .profile-img {
+        width: 115px;
+        height: 115px;
+        margin-bottom: 22px;
+      }
+      ul.info-list {
+        font-size: 1rem;
+      }
+      ul.info-list li::before {
+        left: -22px;
+      }
+      .bio {
+        font-size: 0.95rem;
+        max-height: 100px;
+        padding-left: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <article class="profile-card" role="region" aria-label="Profil Diri Dokter Kartun perempuan">
+    <img 
+      src="https://cdn-icons-png.flaticon.com/512/599/599305.png" 
+      alt="Ilustrasi kartun dokter" 
+      class="profile-img" 
+      loading="lazy" 
+      width="140" 
+      height="140" 
+    />
+    <h1>Dr. Nia Kurnia</h1>
+    <p class="title">Dokter umum</p>
+    <ul class="info-list">
+      <li>Usia: 20 tahun</li>
+      <li>Alamat: Jalan menuju harapan</li>
+      <li>Email: dr.nia.com</li>
+      <li>Telepon: kosong lapan lapan kita ke dupan</li>
+    </ul>
+    <p class="bio" tabindex="0">
+      Seorang dokter umum yang berdedikasi tinggi, berkomitmen memberikan layanan kesehatan terbaik dan perhatian penuh kepada pasien.
+    </p>
+  </article>
+</body>
+</html>
